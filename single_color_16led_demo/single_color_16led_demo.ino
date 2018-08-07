@@ -189,7 +189,7 @@ void handleCmd_SET_LED() {
 
 
 void loop() {
-#if 1
+
 	SHOW_LED:
 			Serial.println("===SHOW_LED===");
 			reset = false;
@@ -216,33 +216,6 @@ void loop() {
 
 		CMD_MODE:
 			handleCmd();
-
-#endif
-
-			//for check interrupt
-#if 0 
-			while (true) {
-				if (reset) {
-					reset = false;
-					if (DBG_SERIAL) Serial.println("GO!");
-					ledShow(0xffff);
-					delayMicroseconds(10);
-					ledShow(0);
-				}
-			}
-#endif
-
-			//for test led
-#if 0 
-			unsigned int i, data;
-			while (true) {
-				//delayMicroseconds(10000);
-				data = 1 << ++i % 16;
-				ledShow(data);
-				//if(DBG_SERIAL) Serial.println(data);
-				delay(20);
-			}
-#endif
 
 }
 
@@ -315,17 +288,9 @@ void ledShow(unsigned int val) {
 }
 
 void initLedData() {
-	//test data
-#if 0
-	//black & white
-	unsigned testData = 0xAAAA;
-	for (int i = 0; i < RESOLUTION; i++) {
-		led_data[i] = (i % 2) ? testData : ~testData;
-	}
-#endif
 
 	//chinese text demo
-#if 1
+
 	for (int i = 0; i < sizeof(textChinese) / 16; i++) {
 		if (i > RESOLUTION * 0.8)
 			break;
@@ -336,5 +301,5 @@ void initLedData() {
 		}
 		led_data[i] = d;
 	}
-#endif
+
 }
